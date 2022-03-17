@@ -5,6 +5,23 @@ const Game = () => {
 
     const [inputValue, setInputValue] = useState("");
     const gameNotice = useRef(null);
+    let answer = "";
+    
+    const makeRanNum = () => {
+        return parseInt(Math.random() * 10) + "";
+    }
+
+    const makeAnswer = () => {
+        let tmp = [];
+
+        while (tmp.length < 3) {
+            let ranNum = makeRanNum();
+            if (!tmp.includes(ranNum)) {
+                tmp.push(ranNum);
+            }
+        }
+        return tmp.join("");
+    }
 
     return (
         <>
