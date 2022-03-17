@@ -6,6 +6,7 @@ const Game = () => {
     const [inputValue, setInputValue] = useState("");
     const [answer, setAnswer] = useState("");
     const gameNotice = useRef(null);
+    const resultLog = useRef(null);
 
     useEffect(() => {
         setAnswer(makeAnswer());
@@ -47,8 +48,8 @@ const Game = () => {
         } else {
             notice = `${strike} ${ball}`.trim()
         }
-        console.log(answer);
 
+        postLog(inputValue, notice);
         return gameNotice.current.textContent = notice;
     }
 
@@ -90,6 +91,15 @@ const Game = () => {
         return count === 0 ? "" : `${count}볼`
     }
 
+    const postLog = (number ,text) => {
+        resultLog.current.textContent += `# 숫자를 입력해주세요 : ${number}
+${text}
+
+`;
+
+        
+    }
+
     return (
         <>
             <div className="rule-box">
@@ -100,6 +110,7 @@ const Game = () => {
                 <input placeholder="숫자를 입력해주세요." onKeyUp={(e) => handleInput(e.target.value)}/>
                 <button onClick={handleSubmit} >제시하기</button>
             </div>
+            <pre className="result-log" ref={resultLog}></pre>
         </>
     )
 }
