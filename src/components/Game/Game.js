@@ -128,7 +128,7 @@ ${text}
     return (
         <>
             <div className="rule-box">
-                {rule.map((el) => <div className="rule">{el}</div>)}
+                {rule.map((el, idx) => <div className="rule" key={rule + "_" + idx}>{el}</div>)}
             </div>
             <div className="game-box">
                 <div className="game-result" ref={gameNotice}>게임을 시작할까요?</div>
