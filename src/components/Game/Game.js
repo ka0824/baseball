@@ -5,6 +5,7 @@ const Game = () => {
 
     const [inputValue, setInputValue] = useState("");
     const [answer, setAnswer] = useState("");
+    const [isGameStart, setIsGameStart] = useState(true);
     const gameNotice = useRef(null);
     const resultLog = useRef(null);
 
@@ -33,6 +34,17 @@ const Game = () => {
     }
 
     const handleSubmit = () => {
+
+        if(!isGameStart) {
+            if (inputValue === '1') {
+                setIsGameStart(true);
+                setAnswer(makeAnswer);
+                deleteLog();
+            } else if (inputValue === '2') {
+                deleteLog();
+            } 
+        }
+
         if(!checkValidAnswer(inputValue)) {
             return gameNotice.current.textContent = '서로 다른 숫자로 구성된 세자리 수를 입력해주세요.'
         }
@@ -43,10 +55,15 @@ const Game = () => {
 
         if (strike === '3스트라이크') {
             notice = '3개의 숫자를 모두 맞히셨습니다! 게임 종료.';
+            setIsGameStart(false);
         } else if (strike.length === 0 && ball.length === 0) {
             notice = '4볼';
         } else {
             notice = `${strike} ${ball}`.trim()
+        }
+
+        if (!isGameStart) {
+            notice = '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.';
         }
 
         postLog(inputValue, notice);
@@ -92,12 +109,20 @@ const Game = () => {
     }
 
     const postLog = (number ,text) => {
+        if (!isGameStart) {
+            return resultLog.current.textContent += `${text}
+
+`;
+        }
+
         resultLog.current.textContent += `# 숫자를 입력해주세요 : ${number}
 ${text}
 
 `;
+    }
 
-        
+    const deleteLog = () => {
+        return resultLog.current.textContent = "";
     }
 
     return (
