@@ -15,7 +15,7 @@ const Game = () => {
     useEffect(() => {
         setAnswer(makeAnswer());
     }, [])
-    
+
     const makeRanNum = () => {
         return parseInt(Math.random() * 10) + "";
     }
@@ -41,7 +41,7 @@ const Game = () => {
         if(!isGameStart) {
             if (inputValue === '1') {
                 setIsGameStart(true);
-                setAnswer(makeAnswer);
+                setAnswer(makeAnswer());
                 deleteLog();
             } else if (inputValue === '2') {
                 deleteLog();
@@ -68,7 +68,6 @@ const Game = () => {
         if (!isGameStart) {
             notice = '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.';
         }
-
         postLog(inputValue, notice);
         return gameNotice.current.textContent = notice;
     }
@@ -112,20 +111,28 @@ const Game = () => {
     }
 
     const postLog = (number ,text) => {
+
         if (!isGameStart) {
-            return resultLog.current.textContent += `${text}
+            resultLog.current.textContent += `${text}
+            
 
 `;
+            return scrollToBottom();
         }
 
         resultLog.current.textContent += `# 숫자를 입력해주세요 : ${number}
 ${text}
 
 `;
+        return scrollToBottom();
     }
 
     const deleteLog = () => {
         return resultLog.current.textContent = "";
+    }
+
+    const scrollToBottom = () => {
+        return resultLog.current.scrollTop = resultLog.current.scrollHeight;
     }
 
     return (
@@ -137,13 +144,13 @@ ${text}
             <div className="game-box">
                 <div className="input-box">
                     <div className="game-result" ref={gameNotice}>게임을 시작할까요?</div>
-                    <input onKeyUp={(e) => handleInput(e.target.value)}/>
+                    <input onBlur={(e) => handleInput(e.target.value)}/>
                     <button onClick={handleSubmit}> 
                         <SportsBaseballIcon className="icon" /> 
                     </button>
                     <img src={image} alt="" className="image" />
                 </div>
-                <div className="result-box" text>
+                <div className="result-box">
                     <div className="board">전광판</div>
                     <pre className="result-log" ref={resultLog} />
                 </div>
