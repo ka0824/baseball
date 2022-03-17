@@ -1,5 +1,8 @@
 import rule from '../../texts/rule.js'
 import { useState, useRef, useEffect } from 'react';
+import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
+import '../../css/Game.css';
+import image from '../../image/baseball.jpeg';
 
 const Game = () => {
 
@@ -46,7 +49,7 @@ const Game = () => {
         }
 
         if(!checkValidAnswer(inputValue)) {
-            return gameNotice.current.textContent = '서로 다른 숫자로 구성된 세자리 수를 입력해주세요.'
+            return gameNotice.current.textContent = '세자리 수를 입력해주세요.'
         }
 
         let strike = checkStrike(inputValue);
@@ -126,17 +129,26 @@ ${text}
     }
 
     return (
-        <>
+        <div className="component-box">
             <div className="rule-box">
+                <div className="game-name">야구게임</div>
                 {rule.map((el, idx) => <div className="rule" key={rule + "_" + idx}>{el}</div>)}
             </div>
             <div className="game-box">
-                <div className="game-result" ref={gameNotice}>게임을 시작할까요?</div>
-                <input placeholder="숫자를 입력해주세요." onKeyUp={(e) => handleInput(e.target.value)}/>
-                <button onClick={handleSubmit} >제시하기</button>
+                <div className="input-box">
+                    <div className="game-result" ref={gameNotice}>게임을 시작할까요?</div>
+                    <input onKeyUp={(e) => handleInput(e.target.value)}/>
+                    <button onClick={handleSubmit}> 
+                        <SportsBaseballIcon className="icon" /> 
+                    </button>
+                    <img src={image} alt="" className="image" />
+                </div>
+                <div className="result-box" text>
+                    <div className="board">전광판</div>
+                    <pre className="result-log" ref={resultLog} />
+                </div>
             </div>
-            <pre className="result-log" ref={resultLog}></pre>
-        </>
+        </div>
     )
 }
 
