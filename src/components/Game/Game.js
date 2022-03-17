@@ -1,11 +1,15 @@
 import rule from '../../texts/rule.js'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const Game = () => {
 
     const [inputValue, setInputValue] = useState("");
+    const [answer, setAnswer] = useState("");
     const gameNotice = useRef(null);
-    let answer = "";
+
+    useEffect(() => {
+        setAnswer(makeAnswer());
+    }, [])
     
     const makeRanNum = () => {
         return parseInt(Math.random() * 10) + "";
@@ -27,16 +31,63 @@ const Game = () => {
         setInputValue(value);
     }
 
-    const handleSubmit = (value) => {
+    const handleSubmit = () => {
         if(!checkValidAnswer(inputValue)) {
-            gameNotice.current.textContent = '서로 다른 숫자로 구성된 세자리 수를 입력해주세요.'
+            return gameNotice.current.textContent = '서로 다른 숫자로 구성된 세자리 수를 입력해주세요.'
         }
+
+        let strike = checkStrike(inputValue);
+        let ball = checkBall(inputValue);
+        let notice = ''
+
+        if (strike === '3스트라이크') {
+            notice = '3개의 숫자를 모두 맞히셨습니다! 게임 종료.';
+        } else if (strike.length === 0 && ball.length === 0) {
+            notice = '4볼';
+        } else {
+            notice = `${strike} ${ball}`.trim()
+        }
+        console.log(answer);
+
+        return gameNotice.current.textContent = notice;
     }
 
-    const checkValidAnswer = (answer) => {
+    const checkValidAnswer = (input) => {
         const regEXP = /^[0-9]{3}$/;
         
-        return regEXP.test(answer);
+        return regEXP.test(input);
+    }
+
+    const checkStrike = (input) => {
+        let count = 0;
+
+        for (let i = 0; i <= 2; i++) {
+            if (answer[i] === input[i]) {
+                count++
+            }
+        }
+
+        return count === 0 ? "" : `${count}스트라이크`
+    }
+
+    const checkBall = (input) => {
+        let count = 0;
+        const checkedList = [];
+
+        for (let i = 0; i <= 2; i++) {
+
+            if (answer.indexOf(input[i]) === -1) {
+                continue;
+            }
+
+            if (answer.indexOf(input[i]) !== i && !checkedList.includes(input[i])) {
+                count++
+            } else if (input[i] === answer[i] && checkedList.includes(input[i])) {
+                count--;
+            }
+            checkedList.push(input[i])
+        }
+        return count === 0 ? "" : `${count}볼`
     }
 
     return (
