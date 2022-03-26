@@ -1,37 +1,38 @@
 import rule from '../../texts/rule.js'
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
 import '../../css/Game.css';
 import image from '../../image/baseball.jpeg';
 import gameFuncs from '../../funcs/gameFuncs.js'
+import { useSelector, useDispatch } from 'react-redux';
+import { changeInput, changeAnswer, changeGame } from '../../actions/gameActions';
 
 const Game = () => {
-
-    const [inputValue, setInputValue] = useState("");
-    const [answer, setAnswer] = useState("");
-    const [isGameStart, setIsGameStart] = useState(true);
+    
+    const dispatch = useDispatch();
+    const inputValue = useSelector(state => state.inputValue);
+    const answer = useSelector(state => state.answer);
+    const isGameStart = useSelector(state => state.isGameStart);
     const gameNotice = useRef(null);
     const resultLog = useRef(null);
     const { makeAnswer, checkValidAnswer, checkStrike, checkBall } = gameFuncs;
 
-    useEffect(() => {
-        setAnswer(makeAnswer());
-    }, [])
-
     const handleInput = (value) => {
-        setInputValue(value);
+        dispatch(changeInput(value));
     }
 
     const handleSubmit = () => {
-
+        console.log(answer);
         if(!isGameStart) {
             if (inputValue === '1') {
-                setIsGameStart(true);
-                setAnswer(makeAnswer());
+                dispatch(changeGame())
+                dispatch(changeAnswer(makeAnswer()));
                 deleteLog();
             } else if (inputValue === '2') {
                 deleteLog();
-            } 
+            } else {
+                return;
+            }
         }
 
         if(!checkValidAnswer(inputValue)) {
@@ -44,7 +45,7 @@ const Game = () => {
 
         if (strike === '3스트라이크') {
             notice = '3개의 숫자를 모두 맞히셨습니다! 게임 종료.';
-            setIsGameStart(false);
+            dispatch(changeGame());
         } else if (strike.length === 0 && ball.length === 0) {
             notice = '4볼';
         } else {
