@@ -1,3 +1,8 @@
+> ## 사용 기술
+- react, redux, typescript, css
+
+<br />
+
 > ## 구현 기능 목록
 
 <details>
@@ -19,15 +24,28 @@
 </div>
 </details>
 
-- 상태관리 리덕스로 전환하기
+<details>
+<summary>상태관리 리덕스로 전환하기</summary>
+  <a href="https://github.com/ka0824/react/blob/main/library/redux.md#%EA%B5%AC%ED%98%84-%EA%B3%BC%EC%A0%95">
+    리덕스로 전환 과정
+  </a>
+</details>
+
+<details>
+<summary>타입스크립트로 전환하기</summary>
+<div markdown="1">
+<a href="https://github.com/ka0824/typescript/blob/main/feat/react_to_typescript.md">
+    타입스크립트로 전환 과정
+  </a>
+</div>
+</details>
   
 <br />
 
 > ## 구현 예정 기능 목록
 
 - 반응형 웹 만들기
-
-- 타입 스크립트로 바꾸기
+- 테스트 케이스 구현하기
 
 ----------------------------------------------------
 
