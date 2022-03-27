@@ -3,7 +3,7 @@ const gameFuncs = {
         return parseInt(Math.random() * 10) + "";
     },
     makeAnswer: () => {
-        let tmp = [];
+        let tmp: string[] = [];
     
         while (tmp.length < 3) {
             let ranNum = gameFuncs.makeRanNum();
@@ -13,12 +13,12 @@ const gameFuncs = {
         }
         return tmp.join("");
     },
-    checkValidAnswer: (input) => {
+    checkValidAnswer: (input:string) => {
         const regEXP = /^[0-9]{3}$/;
         
         return regEXP.test(input);
     },
-    checkStrike: (input, answer) => {
+    checkStrike: (input:string, answer:string) => {
         let count = 0;
 
         for (let i = 0; i <= 2; i++) {
@@ -31,7 +31,7 @@ const gameFuncs = {
     },
     checkBall : (input, answer) => {
         let count = 0;
-        const checkedList = [];
+        const checkedList: number[] = [];
 
         for (let i = 0; i <= 2; i++) {
 

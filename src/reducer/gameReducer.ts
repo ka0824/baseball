@@ -1,6 +1,12 @@
 import initialState from './initialState';
 
-const gameReducer = (state = initialState, action) => {
+interface State {
+    inputValue: string,
+    answer: string,
+    isGameStart: boolean
+}
+
+const gameReducer = (state = initialState, action):State => {
     switch (action.type) {
         case 'CHANGE_INPUT':
             return {

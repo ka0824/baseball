@@ -1,9 +1,9 @@
-import rule from '../../texts/rule.js'
-import { useRef, useState } from 'react';
+import rule from '../../texts/rule'
+import React, { useRef } from 'react';
 import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
 import '../../css/Game.css';
 import image from '../../image/baseball.jpeg';
-import gameFuncs from '../../funcs/gameFuncs.js'
+import gameFuncs from '../../funcs/gameFuncs'
 import { useSelector, useDispatch } from 'react-redux';
 import { changeInput, changeAnswer, changeGame } from '../../actions/gameActions';
 
@@ -13,16 +13,15 @@ const Game = () => {
     const inputValue = useSelector(state => state.inputValue);
     const answer = useSelector(state => state.answer);
     const isGameStart = useSelector(state => state.isGameStart);
-    const gameNotice = useRef(null);
-    const resultLog = useRef(null);
+    const gameNotice = useRef<HTMLInputElement>(null);
+    const resultLog = useRef<HTMLInputElement>(null);
     const { makeAnswer, checkValidAnswer, checkStrike, checkBall } = gameFuncs;
 
-    const handleInput = (value) => {
+    const handleInput = (value:string) => {
         dispatch(changeInput(value));
     }
 
     const handleSubmit = () => {
-        console.log(answer);
         if(!isGameStart) {
             if (inputValue === '1') {
                 dispatch(changeGame())
