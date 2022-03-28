@@ -39,6 +39,15 @@
   </a>
 </div>
 </details>
+
+<details>
+<summary>테스트 케이스 구현하기</summary>
+<div markdown="1">
+<a href="https://github.com/ka0824/react/blob/main/library/jest.md">
+    jest를 통해 함수 반환 값 테스트 구현 과정
+  </a>
+</div>
+</details>
   
 <br />
 
